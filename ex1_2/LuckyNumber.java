@@ -1,27 +1,37 @@
 import java.util.Scanner;
 
 public class LuckyNumber {
+    public static boolean isLuckyNumber(int n) {
+        // Convert the number to a string to easily access digits by position
+        String strN = Integer.toString(n);
+        
+        // Initialize sum of squares of even-positioned digits
+        int sumOfSquares = 0;
+        
+        // Iterate through the digits in the number
+        for (int i = 0; i < strN.length(); i++) {
+            // Check if the position is even (i + 1 because index starts from 0)
+            if ((i + 1) % 2 == 0) {
+                int digit = Character.getNumericValue(strN.charAt(i));
+                sumOfSquares += digit * digit;
+            }
+        }
+        
+        // Check if the sum of squares is a multiple of 9
+        return sumOfSquares % 9 == 0;
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a number:");
+        System.out.print("Enter a number: ");
         int number = scanner.nextInt();
-        int sum = 0;
-        int position = 1;
-
-        while (number > 0) {
-            int digit = number % 10;
-            if (position % 2 == 0) {
-                sum += digit * digit;
-            }
-            number /= 10;
-            position++;
-        }
-
-        if (sum % 9 == 0) {
-            System.out.println("The number is a lucky number.");
+        
+        if (isLuckyNumber(number)) {
+            System.out.println(number + " is a lucky number.");
         } else {
-            System.out.println("The number is not a lucky number.");
+            System.out.println(number + " is not a lucky number.");
         }
+        
         scanner.close();
     }
 }
